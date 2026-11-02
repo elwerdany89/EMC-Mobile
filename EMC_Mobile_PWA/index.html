@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0a2c45"><link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./icon-192.png"><title>EMC Scaffolding</title>
+<style>
+:root{--navy:#0a2c45;--blue:#087baa;--bg:#f2f6f9;--muted:#718596;--line:#dfe8ee}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Arial,sans-serif;color:#17384e}
+header{background:var(--navy);color:white;padding:22px 18px 26px;border-radius:0 0 22px 22px}
+.top{display:flex;justify-content:space-between;align-items:center}.brand{font-size:24px;font-weight:800;letter-spacing:1px}.tag{font-size:10px;color:#a8d7e8;letter-spacing:1px}
+h1{font-size:22px;margin:22px 0 5px}.sub{font-size:12px;color:#c5dce7}
+main{padding:16px;max-width:680px;margin:auto}.section{font-size:12px;font-weight:bold;letter-spacing:.7px;color:#617b8d;margin:18px 2px 10px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat,.module,.panel{background:white;border:1px solid var(--line);border-radius:14px;padding:15px;box-shadow:0 2px 8px #1232}
+.stat small{color:var(--muted);font-size:11px}.num{font-size:27px;font-weight:bold;margin-top:7px;color:var(--navy)}
+.modules{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.module{min-height:104px;text-align:left;color:var(--navy);font-weight:bold;font-size:14px;cursor:pointer}
+.module span{display:block;font-size:23px;margin-bottom:10px}.module small{display:block;color:var(--muted);font-weight:normal;margin-top:5px}
+.panel{margin-top:14px}.panel h3{margin:0 0 10px;font-size:15px}.muted{color:var(--muted);font-size:12px;line-height:1.5}
+button.primary{background:var(--blue);color:white;border:0;border-radius:10px;padding:11px 14px;font-weight:bold;cursor:pointer}
+button.secondary{background:#eaf2f7;color:var(--blue);border:0;border-radius:10px;padding:10px 12px;font-weight:bold}
+input,select{width:100%;padding:12px;border:1px solid var(--line);border-radius:9px;margin:6px 0 12px;background:white;font-size:15px}
+label{font-size:12px;color:#526d80;font-weight:bold}
+.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}
+.item{padding:12px 0;border-bottom:1px solid var(--line)}.item:last-child{border:0}
+nav{position:sticky;bottom:0;background:white;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:10px 4px calc(10px + env(safe-area-inset-bottom));}
+nav button{border:0;background:none;color:#60798a;font-size:11px;font-weight:bold}
+nav button b{display:block;font-size:19px;margin-bottom:3px}
+.hidden{display:none}.pill{display:inline-block;background:#e7f4f8;color:#087baa;border-radius:20px;padding:4px 8px;font-size:10px}
+</style></head>
+<body>
+<header><div class="top"><div><div class="brand">EMC</div><div class="tag">SCAFFOLDING MANAGEMENT</div></div><span class="pill">MOBILE DEMO</span></div><h1 id="headline">Operations Overview</h1><div class="sub">Scaffolding operations, at a glance</div></header>
+<main>
+<section id="home">
+<div class="section">KEY PERFORMANCE INDICATORS</div>
+<div class="stats">
+<div class="stat"><small>Total Scaffolds</small><div class="num" id="scaffoldCount">0</div></div>
+<div class="stat"><small>Workers</small><div class="num" id="workerCount">0</div></div>
+<div class="stat"><small>Attendance Today</small><div class="num" id="attendanceCount">0</div></div>
+<div class="stat"><small>Inventory Items</small><div class="num" id="inventoryCount">0</div></div>
+</div>
+<div class="section">MANAGEMENT MODULES</div>
+<div class="modules">
+<button class="module" onclick="openModule('scaffolds')"><span>🏗️</span>Scaffolds<small>Register & dimensions</small></button>
+<button class="module" onclick="openModule('workers')"><span>👷</span>Workers<small>Workforce register</small></button>
+<button class="module" onclick="openModule('attendance')"><span>📋</span>Attendance<small>Day / Night shifts</small></button>
+<button class="module" onclick="openModule('inventory')"><span>📦</span>Inventory<small>Materials & quantities</small></button>
+<button class="module" onclick="openModule('inspections')"><span>🛡️</span>Inspections<small>Safety checks</small></button>
+<button class="module" onclick="openModule('takeoff')"><span>📐</span>Takeoff<small>Material schedules</small></button>
+<button class="module" onclick="openModule('scanner')"><span>📷</span>Smart Scanner<small>Document capture</small></button>
+<button class="module" onclick="openModule('reports')"><span>📊</span>Reports<small>Operational summaries</small></button>
+</div>
+<div class="panel"><h3>Connection & Sync</h3><div class="muted">● Offline-ready demo · Data is saved on this device's browser. Cloud synchronization will be connected in a later stage.</div></div>
+</section>
+<section id="module" class="hidden">
+<div class="row" style="margin:5px 0 14px"><button class="secondary" onclick="goHome()">← Dashboard</button><span id="moduleBadge" class="pill">LOCAL DATA</span></div>
+<div class="panel"><h3 id="moduleTitle">Module</h3><div id="moduleContent"></div></div>
+</section>
+</main>
+<nav><button onclick="goHome()"><b>⌂</b>HOME</button><button onclick="openModule('scaffolds')"><b>🏗</b>SCAFFOLDS</button><button onclick="openModule('workers')"><b>👷</b>WORKERS</button><button onclick="openModule('attendance')"><b>☷</b>ATTENDANCE</button></nav>
+<script>
+const keys={scaffolds:'emc_scaffolds',workers:'emc_workers',attendance:'emc_attendance',inventory:'emc_inventory',inspections:'emc_inspections',takeoff:'emc_takeoff'};
+const titles={scaffolds:'Scaffold Register',workers:'Workers Management',attendance:'Attendance',inventory:'Inventory',inspections:'Inspections',takeoff:'Takeoff',scanner:'Smart Scaffold Scanner',reports:'Reports'};
+function get(k){try{return JSON.parse(localStorage.getItem(keys[k])||'[]')}catch{return []}}
+function set(k,v){localStorage.setItem(keys[k],JSON.stringify(v));refresh()}
+function refresh(){document.getElementById('scaffoldCount').textContent=get('scaffolds').length;document.getElementById('workerCount').textContent=get('workers').length;document.getElementById('attendanceCount').textContent=get('attendance').filter(x=>x.date===new Date().toISOString().slice(0,10)).length;document.getElementById('inventoryCount').textContent=get('inventory').length}
+function goHome(){document.getElementById('home').classList.remove('hidden');document.getElementById('module').classList.add('hidden');document.getElementById('headline').textContent='Operations Overview';refresh()}
+function openModule(k){document.getElementById('home').classList.add('hidden');document.getElementById('module').classList.remove('hidden');document.getElementById('headline').textContent=titles[k]||'EMC';document.getElementById('moduleTitle').textContent=titles[k]||'EMC';render(k)}
+function field(label,name,type='text',required=true){return `<label>${label}</label><input name="${name}" type="${type}" ${required?'required':''}>`}
+function render(k){let c=document.getElementById('moduleContent');
+if(['scaffolds','workers','attendance','inventory'].includes(k)){
+let form='';
+if(k==='scaffolds')form=`${field('Scaffold / Tag No.','code')}${field('Area / Location','area')}${field('Scaffold Type','type')}<div class="row">${field('Height (m)','height','number')}${field('Length (m)','length','number')}</div>${field('Width (m)','width','number')}${field('Status','status')}`;
+if(k==='workers')form=`${field('Worker Name','name')}${field('Role / Trade','role')}${field('Phone','phone', 'tel',false)}${field('Contractor','contractor', 'text',false)}`;
+if(k==='attendance')form=`${field('Worker Name','worker')}${field('Work Date','date','date') }<label>Shift</label><select name="shift"><option>Day</option><option>Night</option></select><label>Status</label><select name="status"><option>Present</option><option>Absent</option><option>Leave</option></select>`;
+if(k==='inventory')form=`${field('Item Code','code')}${field('Item Name','name')}${field('Unit','unit')}${field('Opening Quantity','qty','number')}`;
+c.innerHTML=`<form id="entryForm">${form}<button class="primary" type="submit">Save on this device</button></form><div class="section">SAVED RECORDS</div><div id="records"></div>`;
+document.getElementById('entryForm').onsubmit=e=>{e.preventDefault();let data=Object.fromEntries(new FormData(e.target).entries());data.id=crypto.randomUUID?crypto.randomUUID():String(Date.now());data.createdAt=new Date().toISOString();let a=get(k);a.unshift(data);set(k,a);e.target.reset();render(k)};
+let a=get(k);document.getElementById('records').innerHTML=a.length?a.map(x=>`<div class="item"><b>${escapeHtml(x.code||x.name||x.worker||x.area||'Record')}</b><div class="muted">${escapeHtml(Object.entries(x).filter(([key])=>!['id','createdAt'].includes(key)).map(([key,val])=>key+': '+val).join(' · '))}</div></div>`).join(''):'<div class="muted">No records yet. Add your first record above.</div>';
+}else if(k==='scanner'){c.innerHTML=`<p class="muted">Capture a scaffold document or site record. OCR extraction and automatic scaffold registration will be added after connecting the scanner processing service.</p><input type="file" accept="image/*" capture="environment" id="photo"><div id="preview"></div>`;document.getElementById('photo').onchange=e=>{let f=e.target.files[0];if(f){let u=URL.createObjectURL(f);document.getElementById('preview').innerHTML=`<img src="${u}" style="width:100%;border-radius:10px;margin-top:10px">`}}}
+else{c.innerHTML=`<p class="muted">${k==='reports'?'Operational reports and KPI breakdowns will be added as the data modules are completed.':'Inspection and takeoff forms will be implemented in the next module build.'}</p><span class="pill">PLANNED MODULE</span>`}}
+function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+refresh();if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}
+</script></body></html>
