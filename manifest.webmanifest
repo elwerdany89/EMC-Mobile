@@ -1,11 +1,18 @@
 {
   "name": "EMC Scaffolding Management",
   "short_name": "EMC Scaffolding",
+  "id": "./",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f2f6f9",
-  "theme_color": "#0a2c45",
+  "orientation": "portrait",
+  "background_color": "#f3f6f9",
+  "theme_color": "#0b1f33",
+  "description": "EMC scaffolding and operations management",
+  "categories": [
+    "business",
+    "productivity"
+  ],
   "icons": [
     {
       "src": "./icon-192.png",
